@@ -1,5 +1,5 @@
 import sqlite3
-from .models import Contact
+from models import Contact
 
 
 class ContactDAO:

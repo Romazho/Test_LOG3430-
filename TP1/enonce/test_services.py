@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock
-from Lab1.services import ContactService
+from services import ContactService
 
 # To complete...
 class TestContactService(unittest.TestCase):

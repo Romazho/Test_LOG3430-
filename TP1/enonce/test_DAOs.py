@@ -1,7 +1,8 @@
 import sqlite3
 import unittest.mock
 import os
-from Lab1.DAOs import ContactDAO
+from DAOs import ContactDAO
+from models import Contact
 
 # To complete...
 class TestContactDAO(unittest.TestCase):
@@ -10,6 +11,17 @@ class TestContactDAO(unittest.TestCase):
         self.db_file = 'temp.db'
         self.contactDAO = ContactDAO(self.db_file)
         self.contactDAO.init_db()
+        self.contact1 = Contact(6, "R", "Z", "514999666", "Hakim@gmail.com", False, 20.3)
+        self.contact2 = Contact(50, "H", "P", "514999666", "Hakim@gmail.com", False, 20.3)
+
+    def compareWithContact1(self, newContact=None):
+        if newContact is not None:
+            assert self.contact1.first_name == newContact.first_name, "should be {}".format(self.contact1.first_name)
+            assert self.contact1.last_name == newContact.last_name, "should be {}".format(self.contact1.last_name)
+            assert self.contact1.phone == newContact.phone, "should be {}".format(self.contact1.phone)
+            assert self.contact1.mail == newContact.mail, "should be {}".format(self.contact1.mail)
+            assert self.contact1.updated == newContact.updated, "should be {}".format(self.contact1.updated)
+            assert self.contact1.updated_date == newContact.updated_date, "should be {}".format(self.contact1.updated_date)
 
     def tearDown(self):
         os.remove(self.db_file)
@@ -22,14 +34,22 @@ class TestContactDAO(unittest.TestCase):
         except sqlite3.OperationalError:
             self.fail("Should not have raised sqlite3.OperationalError")
     
+    #On vérifie que le nombre d'appel concorde avec la valeur de lastrowid
     def test_when_add_is_called_it_should_return_an_autoincremented_id(self):
-        pass
+        assert self.contactDAO.add(self.contact1) == 1, "should be 1"
+        assert self.contactDAO.add(self.contact1) == 2, "should be 2"
+        self.contactDAO.add(self.contact1)
+        assert self.contactDAO.add(self.contact1) == 4, "should be 4"
     
+    #On vérifie que contact1 à bel et bien été ajouté
     def test_get_by_id_after_add_should_return_inserted_value(self):
-        pass
+        newContact = self.contactDAO.get_by_id(self.contactDAO.add(self.contact1))
+        self.compareWithContact1(newContact)
     
     def test_get_by_names_after_add_should_return_inserted_value(self):
-        pass
+        self.contactDAO.add(self.contact1)
+        newContact = self.contactDAO.get_by_names(self.contact1.first_name, self.contact1.last_name)
+        self.compareWithContact1(newContact)
 
     def test_get_by_id_with_undefined_rowid_should_return_None(self):
         pass
