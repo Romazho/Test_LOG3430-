@@ -23,6 +23,7 @@ class TestContactDAO(unittest.TestCase):
             assert self.contact1.updated == newContact.updated, "should be {}".format(self.contact1.updated)
             assert self.contact1.updated_date == newContact.updated_date, "should be {}".format(self.contact1.updated_date)
 
+
     def tearDown(self):
         os.remove(self.db_file)
     
@@ -52,10 +53,14 @@ class TestContactDAO(unittest.TestCase):
         self.compareWithContact1(newContact)
 
     def test_get_by_id_with_undefined_rowid_should_return_None(self):
-        pass
+        self.contactDAO.add(self.contact1)
+        newContact = self.contactDAO.get_by_id(2)
+        assert self.compareWithContact1(newContact) == None
     
     def test_get_by_names_with_notexisted_contact_should_return_None(self):
-        pass
+        self.contactDAO.add(self.contact1)
+        newContact = self.contactDAO.get_by_names(self.contact2.first_name, self.contact2.last_name)
+        assert self.compareWithContact1(newContact) == None
     
     def test_deactivate_contact_then_get_it_with_id_should_be_not_updated(self):
         pass
