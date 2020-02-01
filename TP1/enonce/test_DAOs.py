@@ -13,6 +13,9 @@ class TestContactDAO(unittest.TestCase):
         self.contactDAO.init_db()
         self.contact1 = Contact(6, "R", "Z", "514999666", "Hakim@gmail.com", True, 20.3)
         self.contact2 = Contact(50, "H", "P", "514999666", "Hakim@gmail.com", False, 20.3)
+
+    def tearDown(self):
+        os.remove(self.db_file)
     
     def printContact(self, contactToPrint):
         if contactToPrint is None:
@@ -39,9 +42,6 @@ class TestContactDAO(unittest.TestCase):
         self.assertEqual(contact1.mail, contact2.mail, "{0} not equal to {1}".format(self.contact1.mail, self.contact2.mail))
         self.assertEqual(contact1.updated, contact2.updated, "{0} not equal to {1}".format(self.contact1.updated, self.contact2.updated))
         self.assertEqual(contact1.updated_date, contact2.updated_date, "{0} not equal to {1}".format(self.contact1.updated_date, self.contact2.updated_date))
-
-    def tearDown(self):
-        os.remove(self.db_file)
     
     def test_when_init_db_is_called_it_should_create_table(self):
         try:
@@ -103,34 +103,65 @@ class TestContactDAO(unittest.TestCase):
         self.assertEqual(res, 0, "undefined id deletion does not return 0")
 
     def test_after_deleting_contact_by_names_get_item_with_id_should_return_None(self):
-        pass
+        ctod = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", True, 22.9)
+        self.contactDAO.add(ctod)
+        self.contactDAO.delete_by_names("Bob", "Kump")
+        res = self.contactDAO.get_by_id(1)
+        self.assertIsNone(res, "getting by id a deleted contact by name does not return None")
 
     def test_deleting_not_existed_contact_should_return_zero(self):
-        pass
+        res = self.contactDAO.delete_by_names("Bob", "Kump")
+        self.assertEqual(res, 0, "deleting non existant contact by name does not return 0")
+        res = self.contactDAO.delete_by_id(1)
+        self.assertEqual(res, 0, "deleting non existant contact by id does not return 0")
 
     def test_update_contact_should_set_the_provided_values(self):
-        pass
+        ctou = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", True, 22.9)
+        ctoc = Contact(1, "John", "Dough", "450-221-998", "john.dough@coldmail.com", False, 40.8)
+        self.contactDAO.add(ctou)
+        self.contactDAO.update(ctoc)
+        res = self.contactDAO.get_by_names("John", "Dough")
+        self.areContactAttribsEqual(ctoc, res)
 
     def test_update_contact_should_return_zero_if_id_does_not_exist(self):
-        pass
+        ctou = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", True, 22.9)
+        res = self.contactDAO.update(ctou)
+        self.assertEqual(res, 0, "updating a non existant contact id does not return 0")
 
     def test_list_contacts_with_no_contacts_added_returns_empty_list(self):
-        pass
+        res = self.contactDAO.list()
+        self.assertEqual(len(res), 0, "list does not return an empty list on empty database")
     
     def test_list_contacts_with_one_contact_should_return_list_with_contact(self):
-        pass
+        ctoa = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", True, 22.9)
+        self.contactDAO.add(ctoa)
+        res = self.contactDAO.list()
+        self.assertEqual(len(res), 1, "list does not return a list of count = 1 when only 1 contact is in database")
+        self.areContactAttribsEqual(ctoa, res[0])
     
     def test_list_contacts_with_updated_False_and_all_items_updated_should_return_empty_list(self):
-        pass
+        ctoa = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", True, 22.9)
+        self.contactDAO.add(ctoa)
+        res = self.contactDAO.list(False)
+        self.assertEqual(len(res), 0, "list does not return an empty list when all contacts are updated and list was called with update = False")
     
     def test_list_contacts_with_updated_True_and_all_items_not_updated_should_return_empty_list(self):
-        pass
+        ctoa = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", False, 22.9)
+        self.contactDAO.add(ctoa)
+        res = self.contactDAO.list(True)
+        self.assertEqual(len(res), 0, "list does not return an empty list when all contacts are not updated and list was called with updated = True")
     
     def test_list_contacts_with_all_not_updated_items_and_updated_False_should_return_all_contacts(self):
-        pass
+        ctoa = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", False, 22.9)
+        self.contactDAO.add(ctoa)
+        res = self.contactDAO.list(False)
+        self.assertEqual(len(res), 1, "list does not return all updated contacts when list was called with updated = False")
 
     def test_list_contacts_with_all_updated_items_and_updated_True_should_return_all_contacts(self):
-        pass
+        ctoa = Contact(3, "Bob", "Kump", "514-554-223", "bob.kump@mailmail.com", True, 22.9)
+        self.contactDAO.add(ctoa)
+        res = self.contactDAO.list(True)
+        self.assertEqual(len(res), 1, "list does not return all updated contacts when list was called with updated = True")
 
 if __name__ == '__main__':
     unittest.main()

@@ -169,7 +169,7 @@ class ContactDAO:
                         WHERE
                             first_name = ? AND last_name = ?
                         ''', (first_name, last_name))
-        connection.close()
+        connection.commit()
         return cursor.rowcount
 
     def list(self, updated=None):
