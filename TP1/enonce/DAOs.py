@@ -44,8 +44,8 @@ class ContactDAO:
                             VALUES
                             (?,?,?,?,?,?)
                             ''', (
-            new_contact.first_name, new_contact.last_name, new_contact.phone, new_contact.mail, new_contact.updated,
-            new_contact.updated_date))
+                new_contact.first_name, new_contact.last_name, new_contact.phone, new_contact.mail, new_contact.updated,
+                new_contact.updated_date))
             connection.commit()
             return cursor.lastrowid
 
@@ -137,8 +137,8 @@ class ContactDAO:
                         WHERE
                             id = ?
                         ''', (
-            contact.first_name, contact.last_name, contact.phone, contact.mail, contact.updated, contact.updated_date,
-            contact.id))
+                contact.first_name, contact.last_name, contact.phone, contact.mail, contact.updated, contact.updated_date,
+                contact.id))
             connection.commit()
             return cursor.rowcount
 
