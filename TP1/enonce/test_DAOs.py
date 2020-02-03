@@ -91,9 +91,7 @@ class TestContactDAO(unittest.TestCase):
 
     # Verifier que Contact.updated est assigne a False suite a l'appel de deactivate sur un contact avec updated = True dans la BD
     def test_deactivate_contact_then_get_it_with_id_should_be_not_updated(self):
-        ctod = Contact(3, "Bob", "Kump", "514-554-223",
-                       "bob.kump@mailmail.com", True, 22.9)
-        self.contactDAO.add(ctod)
+        self.contactDAO.add(self.contact1)
         self.contactDAO.deactivate(1)
         res = self.contactDAO.get_by_id(1)
         self.assertFalse(res.updated)
