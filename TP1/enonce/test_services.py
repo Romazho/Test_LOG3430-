@@ -98,21 +98,18 @@ class TestContactService(unittest.TestCase):
             NotExistedItem, self.contactService.delete_contact, None, 'oki', 'doki')
 
     def test_when_verify_contacts_status_is_called_and_delta_days_is_bigger_than_1095_it_should_call_DAO_deactivate(self):
-        self.contactService = Mock()
         contact = Contact(1, 'first_name', 'last_name', 'phone',
                           'mail', True, datetime.now().timestamp() - 990000000)
-
-        # self.contactDAO.list.return_value = [contact]
-        self.contactService.retrieve_active_contacts.return_value = [contact]
-
+        self.contactDAO.list.return_value = [contact]
         self.contactService.verify_contacts_status()
-        self.contactDAO.deactivate.assert_called_once()
+        self.contactDAO.deactivate.assert_called()
 
-        # contact = Contact(2, "Elie", "Rouphael", "012-345-6789", "mail@mail.com", True,
-        #                   (datetime.now().timestamp() - timedelta(days=2626).total_seconds()))
-        # self.contactDAO.list.return_value = [contact]
-        # self.contactService.verify_contacts_status()
-        # self.contactDAO.deactivate.assert_called_once()
+    def test_when_verify_contacts_status_is_called_and_contact_is_new_it_should_not_call_DAO_deactivate(self):
+        contact = Contact(1, 'first_name', 'last_name', 'phone',
+                          'mail', True, datetime.now().timestamp())
+        self.contactDAO.list.return_value = [contact]
+        self.contactService.verify_contacts_status()
+        self.contactDAO.assert_not_called()
 
 
 if __name__ == '__main__':
