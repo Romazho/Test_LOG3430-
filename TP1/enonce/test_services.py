@@ -1,9 +1,10 @@
 import unittest
-from services import AlreadyExistedItem
 from unittest.mock import Mock
 from services import ContactService
 from datetime import datetime
-
+from services import AlreadyExistedItem
+from services import UndefinedID
+from services import NotExistedItem
 
 # To complete...
 
@@ -27,49 +28,73 @@ class TestContactService(unittest.TestCase):
         self.contactDAO.get_by_names.return_value = None
         self.contact = self.contactService.create_contact(
             'Houssem', 'Ben Braiek', '123-456-7891', 'houssem.bb@gmail.com')
-        self.assertEqual(self.contact.updated_date, datetime.now().timestamp())
+        self.assertEqual(int(self.contact.updated_date),
+                         int(datetime.now().timestamp()))
 
     def test_when_contact_is_created_and_DAO_get_by_names_returns_contact_it_should_raise_AlreadyExistedItem(self):
-        pass
-        # try:
-        #     self.contactDAO.add.return_value = 1
-        #     self.contact = self.contactService.create_contact(
-        #         'Houssem', 'Ben Braiek', '123-456-7891', 'houssem.bb@gmail.com')
-        # except Exception as e:
-        #     self.assertRaises()
+        self.contactDAO.add.return_value = 1
+        self.assertRaises(AlreadyExistedItem, self.contactService.create_contact,
+                          'Houssem', 'Ben Braiek', '123-456-7891', 'houssem.bb@gmail.com')
 
     def test_when_contact_is_changed_updated_should_be_True(self):
-        pass
+        self.contactDAO.add.return_value = 1
+        self.contactDAO.get_by_names.return_value = None
+        self.contact = self.contactService.create_contact(
+            'Houssem', 'Ben Braiek', '123-456-7891', 'houssem.bb@gmail.com')
+        constact = self.contactService.update_contact(
+            None, 'Houssem', 'Ben Braiek', '123-456-7891', 'lol@gmail.com')
+        self.assertTrue(constact.updated)
 
     def test_when_contact_is_changed_updated_date_should_be_now(self):
-        pass
+        constact = self.contactService.update_contact(
+            None, 'Houssem', 'Ben Braiek', '123-456-7891', 'lol@gmail.com')
+        self.assertEqual(int(constact.updated_date),
+                         int(datetime.now().timestamp()))
 
     def test_when_contact_is_changed_and_DAO_update_returns_zero_it_should_raise_UndefinedID(self):
-        pass
+        self.contactDAO.update.return_value = 0
+        self.assertRaises(UndefinedID, self.contactService.update_contact,
+                          None, 'Houssem', 'Ben Braiek', '123-456-7891', 'lol@gmail.com')
 
     def test_when_retrieve_contact_is_called_with_id_and_DAO_get_by_id_should_be_called(self):
-        pass
+        self.contactService.retrieve_contact(23, 'Gary', 'Simpson')
+        self.contactDAO.get_by_id.assert_called_once_with(id=23)
 
     def test_when_retrieve_contact_is_called_with_names_and_DAO_get_by_names_should_be_called(self):
-        pass
+        self.contactService.retrieve_contact(None, 'Gary', 'Simpson')
+        self.contactDAO.get_by_names.assert_called_once_with(
+            first_name='Gary', last_name='Simpson')
 
     def test_when_retrieve_contact_is_called_with_id_and_DAO_returns_None_it_should_raise_UndefinedID(self):
-        pass
+        self.contactDAO.get_by_id.return_value = None
+        self.assertRaises(
+            UndefinedID, self.contactService.retrieve_contact, 23, 'Gary', 'Simpson')
 
     def test_when_retrieve_contact_is_called_with_names_and_DAO_returns_None_it_should_raise_NotExistedItem(self):
-        pass
+        self.contactDAO.get_by_names.return_value = None
+        self.assertRaises(
+            NotExistedItem, self.contactService.retrieve_contact, None, 'Gary', 'Simpson')
 
     def test_when_delete_contact_is_called_with_id_and_DAO_delete_by_id_should_be_called(self):
-        pass
+        self.contactService.delete_contact(77, 'Harry', 'Shooter')
+        self.contactDAO.delete_by_id.assert_called_once_with(77)
 
     def test_when_delete_contact_is_called_with_names_and_DAO_delete_by_names_should_be_called(self):
-        pass
+        self.contactService.delete_contact(None, 'Harry', 'Shooter')
+        self.contactDAO.delete_by_names.assert_called_once_with(
+            'Harry', 'Shooter')
 
     def test_when_delete_contact_is_called_with_id_and_DAO_delete_by_id_returns_zero_it_should_raise_UndefinedID(self):
-        pass
+        self.contactDAO.delete_by_id.return_value = 0
+        self.assertRaises(
+            UndefinedID, self.contactService.delete_contact, 77, 'some', 'dude')
 
-    def test_when_retrieve_contact_is_called_with_names_and_DAO_delete_by_names_returns_zero_it_should_raise_NotExistedItem(self):
-        pass
+    # hypothèse: le nom de la fonction est erroné, car la fonction retrieve ne call pas "delete_by_names", alors on a changé le nom de la fonction pour
+    # test_when_delete... à la place de test_when_retrieve...
+    def test_when_delete_contact_is_called_with_names_and_DAO_delete_by_names_returns_zero_it_should_raise_NotExistedItem(self):
+        self.contactDAO.delete_by_names.return_value = 0
+        self.assertRaises(
+            NotExistedItem, self.contactService.delete_contact, None, 'oki', 'doki')
 
 
 if __name__ == '__main__':
