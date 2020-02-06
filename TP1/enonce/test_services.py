@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import Mock
+from models import Contact
 from services import ContactService
-from datetime import datetime
+from datetime import timedelta, datetime
 from services import AlreadyExistedItem
 from services import UndefinedID
 from services import NotExistedItem
@@ -95,6 +96,23 @@ class TestContactService(unittest.TestCase):
         self.contactDAO.delete_by_names.return_value = 0
         self.assertRaises(
             NotExistedItem, self.contactService.delete_contact, None, 'oki', 'doki')
+
+    def test_when_verify_contacts_status_is_called_and_delta_days_is_bigger_than_1095_it_should_call_DAO_deactivate(self):
+        self.contactService = Mock()
+        contact = Contact(1, 'first_name', 'last_name', 'phone',
+                          'mail', True, datetime.now().timestamp() - 990000000)
+
+        # self.contactDAO.list.return_value = [contact]
+        self.contactService.retrieve_active_contacts.return_value = [contact]
+
+        self.contactService.verify_contacts_status()
+        self.contactDAO.deactivate.assert_called_once()
+
+        # contact = Contact(2, "Elie", "Rouphael", "012-345-6789", "mail@mail.com", True,
+        #                   (datetime.now().timestamp() - timedelta(days=2626).total_seconds()))
+        # self.contactDAO.list.return_value = [contact]
+        # self.contactService.verify_contacts_status()
+        # self.contactDAO.deactivate.assert_called_once()
 
 
 if __name__ == '__main__':
