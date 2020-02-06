@@ -136,10 +136,23 @@ class ContactService:
         '''
         Return True if the phone number is a valid american phone number otherwise, it returns False.
         '''
+        # format : 123-123-1234
+
+        if (len(phone) != 12):
+            return False
+
+        if(phone[3] != '-' or phone[7] != '-'):
+            return False
+
+        for i in range(len(phone)):
+            if(i != 3 and i != 7):
+                if(not phone[i].isdigit()):
+                    return False
 
         return True
 
     # To complete and to propose unit test for it
+
     def check_mail(self, mail):
         '''
         Return True if the mail address is valid otherwise, it returns False.

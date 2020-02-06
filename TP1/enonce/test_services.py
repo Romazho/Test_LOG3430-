@@ -126,6 +126,19 @@ class TestContactService(unittest.TestCase):
         self.assertFalse(self.contactService.check_mail("@dont.com"))
         self.assertFalse(self.contactService.check_mail("mail.me@.com"))
 
+    def test_when_check_phone_is_called_with_correct_number_it_should_return_true(self):
+        self.assertTrue(self.contactService.check_phone("123-321-7777"))
+        self.assertTrue(self.contactService.check_phone("999-999-9999"))
+        self.assertTrue(self.contactService.check_phone("000-000-0000"))
+
+    def test_when_check_phone_is_called_with_incorrect_number_it_should_return_false(self):
+        self.assertFalse(self.contactService.check_phone(""))
+        self.assertFalse(self.contactService.check_phone("12 leter str"))
+        self.assertFalse(self.contactService.check_phone("123@321@7777"))
+        self.assertFalse(self.contactService.check_phone("33g-123-0000"))
+        self.assertFalse(self.contactService.check_phone("332-1g3-0000"))
+        self.assertFalse(self.contactService.check_phone("332-123-0a00"))
+
 
 if __name__ == '__main__':
     unittest.main()
