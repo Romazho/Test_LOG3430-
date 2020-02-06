@@ -111,6 +111,21 @@ class TestContactService(unittest.TestCase):
         self.contactService.verify_contacts_status()
         self.contactDAO.assert_not_called()
 
+    def test_when_check_mail_is_called_with_correct_mail_it_should_return_true(self):
+        self.assertTrue(self.contactService.check_mail("dude123@gmail.com"))
+        self.assertTrue(self.contactService.check_mail("123@321.org"))
+        self.assertTrue(self.contactService.check_mail(
+            "this.is.a.legit.email.so.dont.email.me.thanks@gmail.lol"))
+
+    def test_when_check_mail_is_called_with_incorrect_mail_it_should_return_false(self):
+        self.assertFalse(self.contactService.check_mail("not an Email lol"))
+        self.assertFalse(self.contactService.check_mail("close@butNotEmail"))
+        self.assertFalse(self.contactService.check_mail(
+            "Still@Not.AnEmail_BecauseTooLong"))
+        self.assertFalse(self.contactService.check_mail("123@@321.com"))
+        self.assertFalse(self.contactService.check_mail("@dont.com"))
+        self.assertFalse(self.contactService.check_mail("mail.me@.com"))
+
 
 if __name__ == '__main__':
     unittest.main()

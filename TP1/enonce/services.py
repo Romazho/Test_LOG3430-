@@ -1,6 +1,7 @@
 import os
 from models import Contact
 from datetime import datetime
+import re
 
 
 class UndefinedID(Exception):
@@ -135,6 +136,7 @@ class ContactService:
         '''
         Return True if the phone number is a valid american phone number otherwise, it returns False.
         '''
+
         return True
 
     # To complete and to propose unit test for it
@@ -142,6 +144,12 @@ class ContactService:
         '''
         Return True if the mail address is valid otherwise, it returns False.
         '''
+        match = re.match(
+            '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', mail)
+
+        if match == None:
+            return False
+
         return True
 
     def create_login(msg):
