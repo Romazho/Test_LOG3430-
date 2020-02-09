@@ -15,7 +15,6 @@ class TestContactService(unittest.TestCase):
     def setUp(self):
         self.contactDAO = Mock()
         self.contactService = ContactService(self.contactDAO)
-        # Preparation for the next tests
 
     def test_when_contact_is_created_updated_should_be_True(self):
         self.contactDAO.add.return_value = 1
