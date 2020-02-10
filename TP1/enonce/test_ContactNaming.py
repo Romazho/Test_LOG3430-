@@ -1,5 +1,5 @@
 import unittest
-from Lab1.contact import Contact
+from models import Contact
 
 class TestContact(unittest.TestCase):
     def test_email(self):
@@ -8,9 +8,9 @@ class TestContact(unittest.TestCase):
 
         self.assertEqual(self.cont_1.email, 'Noureddine.Kerzazi@polymtl.ca')
         self.assertEqual(self.cont_2.email, 'Bram.Adam@polymtl.ca')
-
-        self.cont_1.first = 'Noureddine2'
-        self.cont_2.first = 'Bram2'
+        # Hypothèse: Ici, il y avait un typo: au lieu d'avoir first_name, il y avait juste first
+        self.cont_1.first_name = 'Noureddine2'
+        self.cont_2.first_name = 'Bram2'
         self.assertEqual(self.cont_1.email, 'Noureddine2.Kerzazi@polymtl.ca')
         self.assertEqual(self.cont_2.email, 'Bram2.Adam@polymtl.ca')
 
@@ -20,10 +20,12 @@ class TestContact(unittest.TestCase):
 
         self.assertEqual(self.cont_1.fullname, 'Noureddine Kerzazi')
         self.assertEqual(self.cont_2.fullname, 'Bram Adam')
-        self.cont_1.first = 'Noureddine2'
-        self.cont_2.first = 'Bram2'
+        # Hypothèse: Ici, il y avait un typo: au lieu d'avoir first_name, il y avait juste first
+        self.cont_1.first_name = 'Noureddine2'
+        self.cont_2.first_name = 'Bram2'
         self.assertEqual(self.cont_1.fullname, 'Noureddine2 Kerzazi')
         self.assertEqual(self.cont_2.fullname, 'Bram2 Adam')
+    
     def test_apply_raise(self):
         self.cont_1 = Contact('Noureddine', 'Kerzazi', 50000)
         self.cont_2 = Contact('Bram', 'Adam', 60000)
