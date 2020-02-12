@@ -14,7 +14,7 @@ class TestContactService(unittest.TestCase):
         self.contactDAO = Mock()
         self.contactService = ContactService(self.contactDAO)
 
-    # On test la valeur de l'atribut updated
+    # On test la valeur de l'attribut updated
     def test_when_contact_is_created_updated_should_be_True(self):
         self.contactDAO.add.return_value = 1
         self.contactDAO.get_by_names.return_value = None
@@ -22,7 +22,7 @@ class TestContactService(unittest.TestCase):
             'Houssem', 'Ben Braiek', '123-456-7891', 'houssem.bb@gmail.com')
         self.assertTrue(self.contact.updated)
 
-    # On test la valeur de l'atribut updated_date
+    # On test la valeur de l'attribut updated_date
     def test_when_contact_is_created_updated_date_should_be_now(self):
         self.contactDAO.add.return_value = 1
         self.contactDAO.get_by_names.return_value = None
@@ -31,13 +31,13 @@ class TestContactService(unittest.TestCase):
         self.assertEqual(int(self.contact.updated_date),
                          int(datetime.now().timestamp()))
 
-    # On test le cas de l'exception AlreadyExistedItem
+    # On test le cas où l'exception AlreadyExistedItem est levée
     def test_when_contact_is_created_and_DAO_get_by_names_returns_contact_it_should_raise_AlreadyExistedItem(self):
         self.contactDAO.add.return_value = 1
         self.assertRaises(AlreadyExistedItem, self.contactService.create_contact,
                           'Houssem', 'Ben Braiek', '123-456-7891', 'houssem.bb@gmail.com')
 
-    # On test la valeur de l'atribut updated
+    # On test le cas où valeur de l'attribut updated est mise à True avec update_contact 
     def test_when_contact_is_changed_updated_should_be_True(self):
         self.contactDAO.add.return_value = 1
         self.contactDAO.get_by_names.return_value = None
@@ -47,7 +47,7 @@ class TestContactService(unittest.TestCase):
             None, 'Houssem', 'Ben Braiek', '123-456-7891', 'lol@gmail.com')
         self.assertTrue(constact.updated)
 
-    # On test la valeur de l'atribut updated_date
+    # On test la valeur de l'attribut updated_date
     def test_when_contact_is_changed_updated_date_should_be_now(self):
         constact = self.contactService.update_contact(
             None, 'Houssem', 'Ben Braiek', '123-456-7891', 'lol@gmail.com')
