@@ -9,7 +9,8 @@ def login():
         with sqlite3.connect("yourdb.db") as db:
             cursor = db.cursor()
         find_user = ("SELECT * FROM contact WHERE mail = ? AND phone = ?")
-        cursor.execute(find_user, [(mail), (phone)])
+        # Hypothese: mail et phone sont supposés être username et password respectivement
+        cursor.execute(find_user, [(username), (password)])
         results = cursor.fetchall()
 
         if results:
