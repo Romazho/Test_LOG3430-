@@ -1,6 +1,7 @@
 import unittest
 import sqlite3
 import builtins
+import os
 from unittest.mock import patch
 from models import Contact
 import login as log
@@ -62,6 +63,8 @@ class TestLogin(unittest.TestCase):
             connection.commit()
 
     
+    def tearDown(self):
+        os.remove(self.db_file)
     
     #On test le cas où l'utilisateur existe, son mot de passe est correct et il réussit à se déconnecter
     @patch('builtins.input', side_effect = ["hercules.thegod@email.com", "123456", invalidUsername , invalidPassword, 'n'])
