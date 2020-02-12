@@ -11,7 +11,7 @@ class TestLogin(unittest.TestCase):
         self.contactDAO = Mock()
         # self.contactService = ContactService(self.contactDAO)
 
-    def test_when_login_is_called_and_results_are_none_and_user_outputs_n_it_should_sleep(self):
+    def test_when_login_is_called_and_results_are_none_and_user_outputs_is_n_it_should_sleep(self):
         login()
         # self.contactDAO.add.return_value = 1
         # self.assertRaises(AlreadyExistedItem, self.contactService.create_contact,
