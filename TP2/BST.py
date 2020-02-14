@@ -311,8 +311,8 @@ def build_nonBTS_tree(tree):
 
 
 # pour tester le code
-tree = BST()
-tree1 = build_tree(tree)
+#tree = BST()
+#tree1 = build_tree(tree)
 
 # BST.print_tree(build_nonBTS_tree(tree))
 # tree1.print_tree()
