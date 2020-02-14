@@ -1,4 +1,4 @@
-import BST
+from BST import BST
 import unittest
 
 class TestBST(unittest.TestCase):
@@ -7,4 +7,7 @@ class TestBST(unittest.TestCase):
         pass
     
     def test_(self):
-        pass
+        bst = BST()
+        bst.insert("123")
+
+

@@ -316,7 +316,7 @@ tree1 = build_tree(tree)
 
 # BST.print_tree(build_nonBTS_tree(tree))
 # tree1.print_tree()
-
+'''
 print("**************")
 print("The height of the Tree1 is :" + str(tree1.height()))
 print("The size of the Tree1 is   :" + str(tree1.size()))
@@ -351,5 +351,7 @@ print("the result of the first search 11  is: ", tree2.search(11))
 print("the result of the second search 37 is: ", tree2.search(37))
 
 print("---------------Reverse the Tree")
+
 tree2.reversetree()
 tree2.print_tree()
+'''
