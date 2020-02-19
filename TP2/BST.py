@@ -6,6 +6,8 @@
 # ---------------------------------------
 
 # The class Stack is used only to count the amount of node. used within the size method
+
+
 class Stack(object):
     def __init__(self):
         self.items = []
@@ -97,7 +99,7 @@ class BST:
 
         # recursive version to calculate the size of the Tree
 
-    def size_(self, node = None):
+    def size_(self, node=None):
         if node is None:
             return 0
         return 1 + self.size_(node.left) + self.size_(node.right)
@@ -153,9 +155,11 @@ class BST:
         if value == cur_node.value:
             return cur_node
         elif value < cur_node.value and cur_node.left is not None:
-            return self._find(value, cur_node.left)  # recursive progression direction left
+            # recursive progression direction left
+            return self._find(value, cur_node.left)
         elif value > cur_node.value and cur_node.right is not None:
-            return self._find(value, cur_node.right)  # recursive progression direction right
+            # recursive progression direction right
+            return self._find(value, cur_node.right)
 
     # delete a node passing a value
     def delete_value(self, value):
@@ -163,7 +167,8 @@ class BST:
 
     # delete a node passing a node
     def delete_node(self, node):
-        if node == None or self.search(node.value) == None:
+        # mauvaise comparaison avec None;-;
+        if node == None or self.search(node.value) == False:
             print("Node to be deleted not found in the tree!")
             return None
 
@@ -199,7 +204,8 @@ class BST:
                 else:
                     node_parent.right = None
             else:
-                self.root = None  # deleted the root node means deleting the entire tree.
+                # deleted the root node means deleting the entire tree.
+                self.root = None
 
         # CASE 2 (node has a single child)
         if node_children == 1:
