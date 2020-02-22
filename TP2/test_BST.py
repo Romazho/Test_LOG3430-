@@ -7,7 +7,7 @@ class TestBST(unittest.TestCase):
     def setUp(self):
         self.bst = BST()
 
-    #test boite noir ###################################################################
+    # tests boite noire ###################################################################
 
     # cas où BST = None et node n'existe pas (B1N1)
     def test_delete_node_when_node_is_none_and_BST_is_none(self):
