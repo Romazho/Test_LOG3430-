@@ -7,7 +7,7 @@ class TestBST(unittest.TestCase):
     def setUp(self):
         self.bst = BST()
 
-    # tests boite noire ###################################################################
+    ############### tests en boîte noire ###############
 
     # cas où BST = None et node n'existe pas (B1N1)
     def test_delete_node_when_node_is_none_and_BST_is_none(self):
@@ -33,7 +33,7 @@ class TestBST(unittest.TestCase):
         self.assertEqual(self.bst.find(2), None)
         self.assertEqual(self.bst.root, None)
 
-    # tests boite blanche ###################################################################
+    ############### tests boite blanche ###############
 
     #note: nbChild indique le nombre d'enfant que le node contient
 
