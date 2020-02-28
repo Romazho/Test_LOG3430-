@@ -57,9 +57,11 @@ class Huffman(object):
             f'left: {ldata}, right: {rdata})>'
         )
 
+    
     def is_leaf(self):
         return not self.right and not self.left
 
+    #
     def build_codebook(self):
         """Create map of chars to binary string encodings"""
         self.codebook = {}
@@ -80,7 +82,8 @@ class Huffman(object):
                 self.codebook[data] = prefix + code
 
         return self.codebook
-
+        
+    #
     @classmethod
     def from_string(cls, string):
         # count frequencies of characters in string
@@ -113,12 +116,14 @@ class Huffman(object):
         header += self.right.__encode_tree(leaves)
         return header
 
+    #
     def encode_tree(self):
         leaves = []
         encoded_tree = self.__encode_tree(leaves)
         leaves = ''.join(leaves)
         return encoded_tree, leaves
 
+    #
     @classmethod
     def unzip_tree(cls, encoded_tree, leaves, idx=0):
         leaves = list(leaves)
@@ -152,6 +157,7 @@ class Huffman(object):
 
         return unzip_tree_helper()
 
+    #
     @classmethod
     def zip(cls, string):
         huff_tree = Huffman.from_string(string)
@@ -167,6 +173,7 @@ class Huffman(object):
         segments.append(compressed_tree + leaves + compressed_data)
         return '|'.join(segments)
 
+    #
     @classmethod
     def unzip(cls, string):
         meta = string.split('|', 4)
@@ -215,7 +222,7 @@ def zip(string: str) -> str:
 def unzip(string: str) -> str:
     return Huffman.unzip(string)
 
-encodage = zip("Polymtl is polymtl")
+encodage = zip("polymtl is polymtl")
 print(encodage)
 decodage = unzip(encodage)
 print(decodage)
