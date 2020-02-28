@@ -2,6 +2,7 @@ from collections import Counter
 from functools import total_ordering
 import heapq
 
+
 def compress_binary_string(string):
     """Convert string of 0s and 1s to bits, and reinterpret bits as string"""
     # string composed of bytes, each 8 bits
@@ -57,7 +58,6 @@ class Huffman(object):
             f'left: {ldata}, right: {rdata})>'
         )
 
-    
     def is_leaf(self):
         return not self.right and not self.left
 
@@ -82,7 +82,7 @@ class Huffman(object):
                 self.codebook[data] = prefix + code
 
         return self.codebook
-        
+
     #
     @classmethod
     def from_string(cls, string):
@@ -219,8 +219,10 @@ class Huffman(object):
 def zip(string: str) -> str:
     return Huffman.zip(string)
 
+
 def unzip(string: str) -> str:
     return Huffman.unzip(string)
+
 
 encodage = zip("polymtl is polymtl")
 print(encodage)
