@@ -13,7 +13,7 @@ class TestBST(unittest.TestCase):
     ################ tests pour l'attribut weight ################
 
     # On vérifie si l'initialisation de la variable weight s'est assigné correctement
-    def test_init_it_should_initialise_weight(self):
+    def test_init_it_should_initialize_weight(self):
         self.assertEqual(self.huffman.weight, 0)
         self.assertEqual(self.huffman.left, None)  # à changer de place
         self.assertEqual(self.huffman.right, None)  # à changer de place
@@ -27,13 +27,23 @@ class TestBST(unittest.TestCase):
     ################ tests pour l'attribut data ################
 
     # On vérifie si l'initialisation de la variable data s'est assigné correctement
-    def test_init_it_should_initialise_data(self):
-        self.assertEqual(self.huffman.data, 'testing')
+    def test_init_it_should_initialize_data(self):
+        self.assertEqual(self.huffman.data, "testing")
 
     # On vérifie que le data n'a pas été changé
-    def test_build_codebook_it_should(self):
+    def test_build_codebook_it_should_not_change_data(self):
         self.huffman.build_codebook()
-        self.assertEqual(self.huffman.data, 'testing')
+        self.assertEqual(self.huffman.data, "testing")
+
+    # On vérifie que le data est bien initialisé au string passé en argument
+    def test_from_string_it_should_assign_data_according_to_huffman_algorithm(self):
+        Huffman.from_string("testing")
+        self.assertEqual(self.huffman.data, "testing")
+
+    # I have no idea what I am doing
+    def test_encode_tree_it_should_(self):
+        leaves = []
+        self.assertEqual(self.huffman.encode_tree(), ('1', "testing"))
 
 
 if __name__ == '__main__':
