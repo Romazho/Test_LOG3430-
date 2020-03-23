@@ -57,10 +57,6 @@ class Huffman(object):
             f'<Huffman(data: {self.data}, '
             f'left: {ldata}, right: {rdata}>'
         )
-        # return (
-        #     f'<Huffman(data: {self.data}, weight: {self.weight} '
-        #     f'left: {ldata} left-weight : {self.left.weight}, right: {rdata}, right-weight : {self.right.weight})>'
-        # )
 
     def is_leaf(self):
         return not self.right and not self.left

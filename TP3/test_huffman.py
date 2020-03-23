@@ -38,8 +38,7 @@ class TestHuffman(unittest.TestCase):
         huffman = Huffman.from_string('cab')
         self.assertEqual(huffman.data, 'cab')
 
-    # À CHANGER PEUT ETRE
-    # On test la valeur de retour de la fonction encode_tree
+    # On test si data ('abc') a influencé la valeur de retour de la fonction encode_tree
     def test_encode_tree_it_should_assign_encoded_tree_to_1_and_append_data_when_is_leaf_is_true(self):
         huffman = Huffman(3, 'abc')
         self.assertEqual(huffman.encode_tree(), ('1', 'abc'))
