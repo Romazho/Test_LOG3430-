@@ -2,6 +2,8 @@ from collections import Counter
 from functools import total_ordering
 from huffman import Huffman
 import unittest
+import builtins
+from unittest.mock import Mock
 import heapq
 
 
@@ -145,6 +147,38 @@ class TestHuffman(unittest.TestCase):
         huffman = Huffman(2, 'anything once again', left, right)
         encoded = huffman.huffman_encode('ab')
         self.assertEqual(encoded, '01')
+    
+    ########## Tests pour la couverture maximale ##########
+    
+    # On vérifie que la représentation en string d'un noeud de Huffman est correcte
+    def test_print_it_should_print_a_huffman_node_according_to_implementation(self):
+        left = Huffman(1, 'a')
+        right = Huffman(1, 'b')
+        huffman = Huffman(2, 'abc', left, right)
+        builtins.print = Mock()
+        builtins.print(repr(huffman))
+        builtins.print.assert_called_with('<Huffman(data: abc, left: a, right: b>')
+
+    # On vérifie que huffman_decode soulève une exception ValueError si le code qui lui est passé est invalide
+    def test_huffman_decode_it_should_raise_ValueError_when_code_is_invalid(self):
+        with self.assertRaises(ValueError) as assertRaisesContext:
+            huffman = Huffman(1, 'abc')
+            huffman.huffman_decode('abcdefg')
+        self.assertTrue('Error when encoding the string' in assertRaisesContext.exception.args)
+    
+    # On vérifie que unzip soulève une exception ValueError pour une string invalide
+    def test_unzip_it_should_raise_ValueError_when_meta_string_is_of_length_5(self):
+        with self.assertRaises(ValueError) as assertRaisesContext:
+            Huffman.unzip('abcdefgh')
+        self.assertTrue('Error when encoding the string' in assertRaisesContext.exception.args)
+    
+    # On vérifie que unzip_tree retourne None si l'index donné est placé au delà de la longueur de l'arbre encodé
+    def test_unzip_tree_it_should_return_None_for_index_over_the_length_of_the_encoded_tree(self):
+        encodedTreeDummy = 'abcdefg'
+        dummyLeaf = Huffman(1, 'abc')
+        index = len(encodedTreeDummy) + 1
+        self.assertIsNone(Huffman.unzip_tree(encodedTreeDummy, [dummyLeaf], index))
+
 
 
 if __name__ == '__main__':
