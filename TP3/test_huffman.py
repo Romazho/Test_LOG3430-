@@ -180,6 +180,5 @@ class TestHuffman(unittest.TestCase):
         self.assertIsNone(Huffman.unzip_tree(encodedTreeDummy, [dummyLeaf], index))
 
 
-
 if __name__ == '__main__':
     unittest.main()

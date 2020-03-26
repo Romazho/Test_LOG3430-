@@ -223,8 +223,7 @@ def zip(string: str) -> str:
 def unzip(string: str) -> str:
     return Huffman.unzip(string)
 
-
-# encodage = zip("polymtl is polymtl")
-# print(encodage)
-# decodage = unzip(encodage)
-# print(decodage)
+encodage = zip("polymtl is polymtl")
+print(encodage)
+decodage = unzip(encodage)
+print(decodage)
