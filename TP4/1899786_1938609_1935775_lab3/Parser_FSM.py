@@ -3,14 +3,12 @@ import re
 
 def tr_newG(obj_state):
     obj_state.group_current_level += 1
-    obj_state.current_group = RuleGroup(
-        obj_state.current_group, obj_state.group_current_level, None)
+    obj_state.current_group = RuleGroup(obj_state.current_group, obj_state.group_current_level, None)
 
 
 def tr_Append_Preconditon(obj_state):
     rule_count = obj_state.current_group.rule_count
-    obj_state.current_group.rules[rule_count -
-                                  1].prefix += obj_state.current_char
+    obj_state.current_group.rules[rule_count - 1].prefix += obj_state.current_char
 
 
 def tr_add_operator(obj_state):
@@ -20,8 +18,7 @@ def tr_add_operator(obj_state):
 
 def tr_end_group(obj_state):
     obj_state.group_current_level += 1
-    obj_state.current_group = RuleGroup(
-        obj_state.current_group, obj_state.group_current_level, None)
+    obj_state.current_group = RuleGroup(obj_state.current_group, obj_state.group_current_level, None)
 
 
 def tr_end_rule(obj_state):
@@ -37,14 +34,11 @@ def tr_add_operator_new_rule(obj_state):
 
 def tr_add_subj(obj_state):
     rule_count = obj_state.current_group.rule_count
-    obj_state.current_group.rules[rule_count -
-                                  1].subject += obj_state.current_char
-
+    obj_state.current_group.rules[rule_count - 1].subject += obj_state.current_char
 
 def tr_pass(obj_state):
     # Do nothing just pass to the next char
     pass
-
 
 def tr_add_operator_new_group(obj_state):
     obj_state.current_group.op = obj_state.current_char
@@ -83,11 +77,11 @@ FSM_MAP = (
      'callback': T_SKIP},  # 3
     {'src': S_SUBJ,
      'dst': S_SUBJ,
-     'condition': "[^\)]",      # Roman: pas sûr si le "^" est un typo ou non
+     'condition': "[^\)]",
      'callback': T_APPEND_CHAR_SUBJ},
     {'src': S_SUBJ,
      'dst': S_END_RULE,
-     'condition': "\)",  # même rule qu'en bas
+     'condition': "\)",
      'callback': T_END_RULE},
     {'src': S_END_RULE,
      'dst': S_END_GROUP,
@@ -111,7 +105,7 @@ FSM_MAP = (
      'callback': T_APPEND_CHAR_PRE},
     {'src': S_SUBJ,
      'dst': S_END_RULE,
-     'condition': "\)",  # même rule qu'en haut
+     'condition': "\)",
      'callback': T_END_RULE})
 
 for map_item in FSM_MAP:
@@ -156,6 +150,7 @@ class ApplyRules:
         for c in self.input_str:
             if not self.go_next(c):
                 print("skip '{}' in {}".format(c, self.current_state))
+
 
     def go_next(self, achar):
         self.current_char = achar
