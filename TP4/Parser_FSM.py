@@ -83,7 +83,7 @@ FSM_MAP = (
      'callback': T_SKIP},  # 3
     {'src': S_SUBJ,
      'dst': S_SUBJ,
-     'condition': "[^\)]",      # Roman: pas sûr si le "^" est un typo ou non. Hakim: Cette Regex veut dire match n'importe quoi sauf )
+     'condition': "[^\)]",  # Cette Regex veut dire match n'importe quoi sauf )
      'callback': T_APPEND_CHAR_SUBJ},
     {'src': S_SUBJ,
      'dst': S_END_RULE,
