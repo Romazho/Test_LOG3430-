@@ -83,7 +83,7 @@ FSM_MAP = (
      'callback': T_SKIP},  # 3
     {'src': S_SUBJ,
      'dst': S_SUBJ,
-     'condition': "[^\)]",      # Roman: pas sûr si le "^" est un typo ou non
+     'condition': "[^\)]",      # Roman: pas sûr si le "^" est un typo ou non. Hakim: Cette Regex veut dire match n'importe quoi sauf )
      'callback': T_APPEND_CHAR_SUBJ},
     {'src': S_SUBJ,
      'dst': S_END_RULE,
@@ -183,9 +183,9 @@ class ApplyRules:
 
 
 # -------------------------------
-#str = "print(bonjour (log3430())) !"
-str = "print(bonjour log3430)"
-# str = "a = 3 +4 * 5 & print(a)"
+#str = "|-print(bonjour (log3430())) !"
+#str = "print(bonjour log3430)"
+str = "a = 3 +4 * 5 & print(a)"
 print("instruction: " + str)
 print("----------------------")
 parse = ApplyRules(str)
