@@ -67,8 +67,6 @@ S_OP = "STATE: OPERATOR"
 S_END_RULE = "STATE: END_RULE"
 S_SUBJ = "STATE: SUBJECT"
 
-S_END = "STATE: END"  # État ajouté par Roman
-
 FSM_MAP = (
     #  {'src':, 'dst':, 'condition':, 'callback': },
     {'src': S_NEW_GROUP,
@@ -114,12 +112,6 @@ FSM_MAP = (
     {'src': S_SUBJ,
      'dst': S_END_RULE,
      'condition': "\)",  # même rule qu'en haut
-     'callback': T_END_RULE},
-
-    # Rule ajouté par Roman
-    {'src': S_END_GROUP,
-     'dst': S_END,
-     'condition': "",
      'callback': T_END_RULE})
 
 for map_item in FSM_MAP:
@@ -193,11 +185,10 @@ class ApplyRules:
 # -------------------------------
 #str = "|-print(bonjour (log3430())) !"
 #str = "print(bonjour log3430)"
-'''str = "a = (3 +4 * 5 & print(a))"
+str = "a = (3 +4 * 5 & print(a))"
 print("instruction: " + str)
 print("----------------------")
 parse = ApplyRules(str)
 parse.run()
 print("----------------------")
 print(parse.current_group)
-'''

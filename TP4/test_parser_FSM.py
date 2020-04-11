@@ -43,12 +43,12 @@ class TestParser(unittest.TestCase):
         parse.run()
         self.assertEqual(parse.current_state, "STATE: OPERATOR")
 
-    # pas sûr s'il faut faire t6, mais je l'ai fais en ajoutant l'état END
-    def test_arrival_to__after_END_GROUP(self):
+    # t6
+    def test_arrival_to_END_GROUP_after_END_RULE(self):
         str = "a = ( (132) ) "
         parse = ApplyRules(str)
         parse.run()
-        self.assertEqual(parse.current_state, "STATE: END")
+        self.assertEqual(parse.current_state, "STATE: END_GROUP")
 
 
 if __name__ == '__main__':
