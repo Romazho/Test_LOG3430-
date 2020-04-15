@@ -185,7 +185,7 @@ class ApplyRules:
 # -------------------------------
 #str = "|-print(bonjour (log3430())) !"
 #str = "print(bonjour log3430)"
-str = "a = (3 +4 * 5 & print(a))"
+str = "a = &"
 print("instruction: " + str)
 print("----------------------")
 parse = ApplyRules(str)
