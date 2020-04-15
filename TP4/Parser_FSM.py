@@ -83,11 +83,11 @@ FSM_MAP = (
      'callback': T_SKIP},  # 3
     {'src': S_SUBJ,
      'dst': S_SUBJ,
-     'condition': "[^\)]",  # Cette Regex veut dire match n'importe quoi sauf )
+     'condition': "[^\)]",
      'callback': T_APPEND_CHAR_SUBJ},
     {'src': S_SUBJ,
      'dst': S_END_RULE,
-     'condition': "\)",  # même rule qu'en bas
+     'condition': "\)",
      'callback': T_END_RULE},
     {'src': S_END_RULE,
      'dst': S_END_GROUP,
@@ -111,7 +111,7 @@ FSM_MAP = (
      'callback': T_APPEND_CHAR_PRE},
     {'src': S_SUBJ,
      'dst': S_END_RULE,
-     'condition': "\)",  # même rule qu'en haut
+     'condition': "\)",
      'callback': T_END_RULE})
 
 for map_item in FSM_MAP:
