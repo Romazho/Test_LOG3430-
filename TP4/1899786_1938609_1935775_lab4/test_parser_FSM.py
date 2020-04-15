@@ -2,8 +2,6 @@ from collections import Counter
 from functools import total_ordering
 from Parser_FSM import ApplyRules
 import unittest
-import builtins
-from unittest.mock import Mock
 
 
 class TestParser(unittest.TestCase):
